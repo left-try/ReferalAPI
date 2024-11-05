@@ -11,5 +11,6 @@ func Router(server *gin.Engine) {
 	authenticated.Use(middleware.Authenticate)
 
 	server.POST("/signup", signUp)
-	server.POST("/login", logIn)
+	server.POST("/login_by_pass", logInByPass)
+	server.POST("/login_by_ref", logInByRef)
 }
