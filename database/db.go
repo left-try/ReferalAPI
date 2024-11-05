@@ -23,21 +23,23 @@ func createTables() {
 		CREATE TABLE IF NOT EXISTS users (
 			id INTEGER PRIMARY KEY AUTOINCREMENT,
 			email TEXT NOT NULL UNIQUE,
-			password TEXT NOT NULL
+			password TEXT NOT NULL,
+			referrer TEXT DEFAULT NULL,
+			FOREIGN KEY (code_id) REFERENCES codes (code_id),
 		)
 	`
 	_, err := DB.Exec(createUsersTable)
 	if err != nil {
 		panic(err)
 	}
-	createRefersTable := `
-		CREATE TABLE IF NOT EXISTS referals (
+	createCodesTable := `
+		CREATE TABLE IF NOT EXISTS codes (
 			id INTEGER PRIMARY KEY AUTOINCREMENT,
-		    FOREIGN KEY(refery_id) REFERENCES users(id),
-		    FOREIGN KEY(referred_id) REFERENCES users(id)
+			code TEXT NOT NULL,
+			Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
 		)
 	`
-	_, err = DB.Exec(createRefersTable)
+	_, err = DB.Exec(createCodesTable)
 	if err != nil {
 		panic(err)
 	}
