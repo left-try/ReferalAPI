@@ -30,32 +30,14 @@ func createTables() {
 	if err != nil {
 		panic(err)
 	}
-	createEventsTable := `
-		CREATE TABLE IF NOT EXISTS events (
+	createRefersTable := `
+		CREATE TABLE IF NOT EXISTS referals (
 			id INTEGER PRIMARY KEY AUTOINCREMENT,
-			name TEXT NOT NULL,
-			desc TEXT NOT NULL,
-			location TEXT NOT NULL,
-			date DATETIME NOT NULL,
-			user_id INTEGER,
-		    FOREIGN KEY(user_id) REFERENCES users(id)
+		    FOREIGN KEY(refery_id) REFERENCES users(id),
+		    FOREIGN KEY(referred_id) REFERENCES users(id)
 		)
 	`
-	_, err = DB.Exec(createEventsTable)
-	if err != nil {
-		panic(err)
-	}
-
-	createRegsTable := `
-		CREATE TABLE IF NOT EXISTS registrations (
-			id INTEGER PRIMARY KEY AUTOINCREMENT,
-			event_id INTEGER,
-			user_id INTEGER,
-			FOREIGN KEY(event_id) REFERENCES events(id),
-			FOREIGN KEY(user_id) REFERENCES users(id)
-		    )
-	`
-	_, err = DB.Exec(createRegsTable)
+	_, err = DB.Exec(createRefersTable)
 	if err != nil {
 		panic(err)
 	}
