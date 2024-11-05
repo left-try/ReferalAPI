@@ -3,6 +3,7 @@ package models
 import (
 	"awesomeProject/database"
 	"awesomeProject/utils"
+	"database/sql"
 	"errors"
 )
 
@@ -18,7 +19,12 @@ func (user *User) Save() error {
 	if err != nil {
 		return err
 	}
-	defer prepare.Close()
+	defer func(prepare *sql.Stmt) {
+		err := prepare.Close()
+		if err != nil {
+			return
+		}
+	}(prepare)
 	encryptedPassword, err := utils.HashPassword(user.Password)
 	if err != nil {
 		return err
@@ -45,5 +51,9 @@ func (user *User) ValidateUser() error {
 	if !passwordIsValid {
 		return errors.New("user is not valid")
 	}
+	return nil
+}
+
+func (user *User) ValidateRef() error {
 	return nil
 }
