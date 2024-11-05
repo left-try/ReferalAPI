@@ -7,13 +7,14 @@ import (
 )
 
 func main() {
-	database.InitDB()
-	server := gin.Default()
+	database.InitDB()       // Initialize database
+	server := gin.Default() // Server
 
-	routes.Router(server)
+	routes.Router(server) // Initialize routes
 
-	err := server.Run("localhost:8000")
+	err := server.Run("localhost:8000") // Run server
 	if err != nil {
+
 		return
 	}
 }
