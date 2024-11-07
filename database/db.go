@@ -25,7 +25,6 @@ func createTables() {
 			email TEXT NOT NULL UNIQUE,
 			password TEXT NOT NULL,
 			referrer TEXT DEFAULT NULL,
-			FOREIGN KEY (code_id) REFERENCES codes (code_id),
 		)
 	`
 	_, err := DB.Exec(createUsersTable)
@@ -37,6 +36,7 @@ func createTables() {
 			id INTEGER PRIMARY KEY AUTOINCREMENT,
 			code TEXT NOT NULL,
 			TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+			FOREIGN KEY (userId) REFERENCES users(id)
 		) ON SCHEDULE EVERY 1 HOUR 
 		DO
 			DELETE FROM codes WHERE timestamp < NOW() - INTERVAL 1 DAY
