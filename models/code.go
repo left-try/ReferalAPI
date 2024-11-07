@@ -12,9 +12,8 @@ type Code struct {
 	UserId int64  `binding:"required"`
 }
 
-func (code *Code) Create(userId int64) error {
-	code.Code = utils.GenerateCode(userId)
-	code.UserId = userId
+func (code *Code) Create() error {
+	code.Code = utils.GenerateCode(code.UserId)
 	query := "INSERT INTO codes(code) VALUES (?,?)"
 	prepare, err := database.DB.Prepare(query)
 	if err != nil {
