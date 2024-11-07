@@ -35,3 +35,20 @@ func (code *Code) Create(userId int64) error {
 	code.Id = id
 	return nil
 }
+
+func (code *Code) Delete() error {
+	query := "DELETE FROM codes WHERE id =?"
+	prepare, err := database.DB.Prepare(query)
+	if err != nil {
+		return err
+	}
+	defer func(prepare *sql.Stmt) {
+		err := prepare.Close()
+		if err != nil {
+			return
+		}
+	}(prepare)
+
+	_, err = prepare.Exec(code.Id)
+	return err
+}
