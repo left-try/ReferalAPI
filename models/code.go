@@ -4,6 +4,7 @@ import (
 	"awesomeProject/database"
 	"awesomeProject/utils"
 	"database/sql"
+	"errors"
 )
 
 type Code struct {
@@ -50,4 +51,18 @@ func (code *Code) Delete() error {
 
 	_, err = prepare.Exec(code.Id)
 	return err
+}
+
+func (code *Code) GetByEmail(email string) (*Code, error) {
+	query := "SELECT id, code FROM codes WHERE user_id IN (SELECT id FROM users WHERE email =?)"
+	row := database.DB.QueryRow(query, email)
+	var codeCode string
+	err := row.Scan(&code.Id, &codeCode)
+	if errors.Is(err, sql.ErrNoRows) {
+		return nil, nil
+	} else if err != nil {
+		return nil, err
+	}
+	code.Code = codeCode
+	return code, nil
 }
