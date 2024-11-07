@@ -2,6 +2,7 @@ package models
 
 import (
 	"awesomeProject/database"
+	"awesomeProject/utils"
 	"database/sql"
 )
 
@@ -12,7 +13,9 @@ type Code struct {
 }
 
 func (code *Code) Create(userId int64) error {
-	query := "INSERT INTO codes(code, user_id) VALUES (?,?)"
+	code.Code = utils.GenerateCode(userId)
+	code.UserId = userId
+	query := "INSERT INTO codes(code.Code, user_id) VALUES (?,?)"
 	prepare, err := database.DB.Prepare(query)
 	if err != nil {
 		return err
