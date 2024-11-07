@@ -14,6 +14,7 @@ func Router(server *gin.Engine) {
 	server.POST("/login_by_pass", logInByPass)
 	server.POST("/login_by_ref", logInByRef)
 
+	server.GET("/get_code_by_email/:email", getCodeByEmail)
 	server.POST("/create_code", createCode)
 	server.DELETE("/delete_code/:id", deleteCode)
 }
