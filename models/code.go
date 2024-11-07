@@ -53,7 +53,7 @@ func (code *Code) Delete() error {
 	return err
 }
 
-func (code *Code) GetByEmail(email string) (*Code, error) {
+func (code *Code) GetCodeByEmail(email string) (*Code, error) {
 	query := "SELECT id, code FROM codes WHERE user_id IN (SELECT id FROM users WHERE email =?)"
 	row := database.DB.QueryRow(query, email)
 	var codeCode string
