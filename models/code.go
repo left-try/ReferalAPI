@@ -53,16 +53,15 @@ func (code *Code) Delete() error {
 	return err
 }
 
-func (code *Code) GetCodeByEmail(email string) (*Code, error) {
-	query := "SELECT id, code FROM codes WHERE user_id IN (SELECT id FROM users WHERE email =?)"
+func GetCodeByEmail(email string) (string, error) {
+	query := "SELECT code FROM codes WHERE user_id IN (SELECT id FROM users WHERE email =?)"
 	row := database.DB.QueryRow(query, email)
-	var codeCode string
-	err := row.Scan(&code.Id, &codeCode)
+	var code string
+	err := row.Scan(&code)
 	if errors.Is(err, sql.ErrNoRows) {
-		return nil, nil
+		return "", nil
 	} else if err != nil {
-		return nil, err
+		return "", err
 	}
-	code.Code = codeCode
 	return code, nil
 }
