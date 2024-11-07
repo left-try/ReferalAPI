@@ -36,8 +36,10 @@ func createTables() {
 		CREATE TABLE IF NOT EXISTS codes (
 			id INTEGER PRIMARY KEY AUTOINCREMENT,
 			code TEXT NOT NULL,
-			Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
-		)
+			TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+		) ON SCHEDULE EVERY 1 HOUR 
+		DO
+			DELETE FROM codes WHERE timestamp < NOW() - INTERVAL 1 DAY
 	`
 	_, err = DB.Exec(createCodesTable)
 	if err != nil {
