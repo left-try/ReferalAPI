@@ -36,3 +36,19 @@ func deleteCode(context *gin.Context) {
 
 	context.JSON(http.StatusOK, gin.H{"message": "Code deleted successfully"})
 }
+
+func getCodeByEmail(context *gin.Context) {
+	email := context.Query("email")
+	code, err := models.GetCodeByEmail(email)
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to get code"})
+		return
+	}
+
+	if code == "" {
+		context.JSON(http.StatusNotFound, gin.H{"message": "Code not found"})
+		return
+	}
+
+	context.JSON(http.StatusOK, gin.H{"code": code})
+}
