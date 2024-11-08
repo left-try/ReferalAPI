@@ -78,3 +78,28 @@ func GetUserIdByCode(code string) (int64, error) {
 	}
 	return userId, nil
 }
+
+func GetReferrals(userId int64) ([]int64, error) {
+	query := "SELECT user_id FROM users WHERE referrer_id =?"
+	rows, err := database.DB.Query(query, userId)
+	if err != nil {
+		return nil, err
+	}
+	defer func(rows *sql.Rows) {
+		err := rows.Close()
+		if err != nil {
+			return
+		}
+	}(rows)
+
+	var referrals []int64
+	for rows.Next() {
+		var referrerId int64
+		err := rows.Scan(&referrerId)
+		if err != nil {
+			return nil, err
+		}
+		referrals = append(referrals, referrerId)
+	}
+	return referrals, nil
+}
