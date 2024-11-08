@@ -15,7 +15,7 @@ type Code struct {
 
 func (code *Code) Create() error {
 	code.Code = utils.GenerateCode(code.UserId)
-	query := "INSERT INTO codes(code) VALUES (?,?)"
+	query := "INSERT INTO codes(code) VALUES (?)"
 	prepare, err := database.DB.Prepare(query)
 	if err != nil {
 		return err
