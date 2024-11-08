@@ -12,7 +12,7 @@ func Router(server *gin.Engine) {
 
 	server.POST("/signup", signUp)
 	server.POST("/login_by_pass", logInByPass)
-	server.POST("/login_by_ref", logInByRef)
+	server.POST("/login_by_ref/:code", signUpByRef)
 
 	server.GET("/get_code_by_email/:email", getCodeByEmail)
 	server.POST("/create_code", createCode)
