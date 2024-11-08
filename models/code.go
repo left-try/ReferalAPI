@@ -66,15 +66,15 @@ func GetCodeByEmail(email string) (string, error) {
 	return code, nil
 }
 
-func GetCodeIdByCode(code string) (int64, error) {
-	query := "SELECT id FROM codes WHERE code =?"
+func GetUserIdByCode(code string) (int64, error) {
+	query := "SELECT userId FROM codes WHERE code =?"
 	row := database.DB.QueryRow(query, code)
-	var id int64
-	err := row.Scan(&id)
+	var userId int64
+	err := row.Scan(&userId)
 	if errors.Is(err, sql.ErrNoRows) {
 		return 0, nil
 	} else if err != nil {
 		return 0, err
 	}
-	return id, nil
+	return userId, nil
 }
