@@ -15,7 +15,12 @@ type User struct {
 }
 
 func (user *User) Save() error {
-	query := "INSERT INTO users(email, password) VALUES (?, ?)"
+	var query string
+	if user.ReferrerId == -1 {
+		query = "INSERT INTO users(email, password) VALUES (?, ?)"
+	} else {
+		query = "INSERT INTO users(email, password, referrer_id) VALUES (?, ?, ?)"
+	}
 	prepare, err := database.DB.Prepare(query)
 	if err != nil {
 		return err
@@ -31,7 +36,12 @@ func (user *User) Save() error {
 		return err
 	}
 	user.Password = encryptedPassword
-	exec, err := prepare.Exec(user.Email, user.Password)
+	var exec sql.Result
+	if user.ReferrerId == -1 {
+		exec, err = prepare.Exec(user.Email, user.Password)
+	} else {
+		exec, err = prepare.Exec(user.Email, user.Password, user.ReferrerId)
+	}
 	if err != nil {
 		return err
 	}
