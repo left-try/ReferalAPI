@@ -54,7 +54,7 @@ func (code *Code) Delete() error {
 }
 
 func GetCodeByEmail(email string) (string, error) {
-	query := "SELECT code FROM codes WHERE user_id IN (SELECT id FROM users WHERE email =?)"
+	query := "SELECT code FROM codes WHERE userId IN (SELECT id FROM users WHERE email =?)"
 	row := database.DB.QueryRow(query, email)
 	var code string
 	err := row.Scan(&code)
@@ -80,7 +80,7 @@ func GetUserIdByCode(code string) (int64, error) {
 }
 
 func GetReferrals(userId int64) ([]int64, error) {
-	query := "SELECT user_id FROM users WHERE referrer_id =?"
+	query := "SELECT userId FROM users WHERE referrer_id =?"
 	rows, err := database.DB.Query(query, userId)
 	if err != nil {
 		return nil, err
