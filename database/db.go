@@ -24,7 +24,7 @@ func createTables() {
 			id INTEGER PRIMARY KEY AUTOINCREMENT,
 			email TEXT NOT NULL UNIQUE,
 			password TEXT NOT NULL,
-			referrer TEXT DEFAULT NULL,
+			FOREIGN KEY (referrer_id) REFERENCES users(id),
 		)
 	`
 	_, err := DB.Exec(createUsersTable)
