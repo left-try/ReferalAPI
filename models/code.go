@@ -10,7 +10,7 @@ import (
 type Code struct {
 	Id     int64
 	Code   string `binding:"required"`
-	UserId int64
+	UserId int64  `binding:"required"`
 }
 
 func (code *Code) Create() error {
