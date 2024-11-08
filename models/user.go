@@ -11,7 +11,6 @@ type User struct {
 	Id       int64
 	Email    string `binding:"required"`
 	Password string `binding:"required"`
-	CodeId   int64
 }
 
 func (user *User) Save() error {
