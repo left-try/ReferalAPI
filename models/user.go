@@ -19,7 +19,7 @@ func (user *User) Save() error {
 	if user.ReferrerId == -1 {
 		query = "INSERT INTO users(email, password) VALUES (?, ?)"
 	} else {
-		query = "INSERT INTO users(email, password, referrer_id) VALUES (?, ?, ?)"
+		query = "INSERT INTO users(email, password, referrerId) VALUES (?, ?, ?)"
 	}
 	prepare, err := database.DB.Prepare(query)
 	if err != nil {
