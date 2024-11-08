@@ -15,6 +15,7 @@ func Router(server *gin.Engine) {
 	server.POST("/sign_up_by_ref/:code", signUpByRef)
 
 	server.GET("/get_code_by_email/:email", getCodeByEmail)
+	server.GET("/get_referrals/:referrerId", getReferralsByReferrerId)
 	server.POST("/create_code", createCode)
 	server.DELETE("/delete_code/:id", deleteCode)
 }
