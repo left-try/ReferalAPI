@@ -14,6 +14,7 @@ func createCode(context *gin.Context) {
 		context.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request"})
 		return
 	}
+	code.UserId = context.GetInt64("userId")
 	err = code.Create()
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create code"})
