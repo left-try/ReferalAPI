@@ -38,7 +38,7 @@ func deleteCode(context *gin.Context) {
 }
 
 func getCodeByEmail(context *gin.Context) {
-	email := context.Query("email")
+	email := context.Param("email")
 	code, err := models.GetCodeByEmail(email)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to get code"})
@@ -54,13 +54,13 @@ func getCodeByEmail(context *gin.Context) {
 }
 
 func getReferralsByReferrerId(context *gin.Context) {
-	userId, err := strconv.ParseInt(context.Param("userId"), 10, 64)
+	referrerId, err := strconv.ParseInt(context.Param("referrerId"), 10, 64)
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"error": "Invalid user ID"})
 		return
 	}
 
-	referrals, err := models.GetReferrals(userId)
+	referrals, err := models.GetReferrals(referrerId)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to get referrals"})
 		return
