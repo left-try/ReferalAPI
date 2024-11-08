@@ -24,7 +24,8 @@ func createTables() {
 			id INTEGER PRIMARY KEY AUTOINCREMENT,
 			email TEXT NOT NULL UNIQUE,
 			password TEXT NOT NULL,
-			FOREIGN KEY (referrerId) REFERENCES users(id),
+			referrerId INTEGER DEFAULT NULL,
+			FOREIGN KEY (referrerId) REFERENCES users(id)
 		)
 	`
 	_, err := DB.Exec(createUsersTable)
@@ -35,11 +36,10 @@ func createTables() {
 		CREATE TABLE IF NOT EXISTS codes (
 			id INTEGER PRIMARY KEY AUTOINCREMENT,
 			code TEXT NOT NULL,
-			TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+			created_at DEFAULT CURRENT_TIMESTAMP,
+			userId INTEGER,
 			FOREIGN KEY (userId) REFERENCES users(id)
-		) ON SCHEDULE EVERY 1 HOUR 
-		DO
-			DELETE FROM codes WHERE timestamp < NOW() - INTERVAL 1 DAY
+		)
 	`
 	_, err = DB.Exec(createCodesTable)
 	if err != nil {
