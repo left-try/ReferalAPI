@@ -37,7 +37,7 @@ func (code *Code) Create() error {
 }
 
 func (code *Code) Delete() error {
-	query := "DELETE FROM codes WHERE id =?"
+	query := "DELETE FROM codes WHERE code =?"
 	prepare, err := database.DB.Prepare(query)
 	if err != nil {
 		return err
@@ -49,7 +49,7 @@ func (code *Code) Delete() error {
 		}
 	}(prepare)
 
-	_, err = prepare.Exec(code.Id)
+	_, err = prepare.Exec(code.Code)
 	return err
 }
 
@@ -67,16 +67,16 @@ func GetCodeByEmail(email string) (string, error) {
 }
 
 func GetUserIdByCode(code string) (int64, error) {
-	query := "SELECT id FROM codes WHERE code =?"
+	query := "SELECT userId FROM codes WHERE code =?"
 	row := database.DB.QueryRow(query, code)
-	var id int64
-	err := row.Scan(&id)
+	var userId int64
+	err := row.Scan(&userId)
 	if errors.Is(err, sql.ErrNoRows) {
 		return -1, nil
 	} else if err != nil {
 		return -1, err
 	}
-	return id, nil
+	return userId, nil
 }
 
 func GetReferrals(userId int64) ([]int64, error) {

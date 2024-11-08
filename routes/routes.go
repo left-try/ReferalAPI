@@ -17,5 +17,5 @@ func Router(server *gin.Engine) {
 	server.GET("/get_code_by_email/:email", getCodeByEmail)
 	server.GET("/get_referrals/:referrerId", getReferralsByReferrerId)
 	server.POST("/create_code", createCode)
-	server.DELETE("/delete_code/:id", deleteCode)
+	server.DELETE("/delete_code/:code", deleteCode)
 }

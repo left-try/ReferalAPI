@@ -24,10 +24,11 @@ func createCode(context *gin.Context) {
 }
 
 func deleteCode(context *gin.Context) {
-	id, err := strconv.ParseInt(context.Param("id"), 10, 64)
-	code := &models.Code{Id: id}
+	code := context.Param("code")
+	var Code models.Code
+	Code.Code = code
 
-	err = code.Delete()
+	err := Code.Delete()
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to delete code"})
 		return

@@ -50,7 +50,7 @@ func logInByPass(context *gin.Context) {
 }
 
 func signUpByRef(context *gin.Context) {
-	code := context.Query("code")
+	code := context.Param("code")
 	referrerId, err := models.GetUserIdByCode(code)
 	if err != nil {
 		context.JSON(http.StatusNotFound, gin.H{"message": "Invalid code"})
