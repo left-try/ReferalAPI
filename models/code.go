@@ -80,7 +80,7 @@ func GetUserIdByCode(code string) (int64, error) {
 }
 
 func GetReferrals(userId int64) ([]int64, error) {
-	query := "SELECT userId FROM users WHERE referrerId =?"
+	query := "SELECT id FROM users WHERE referrerId =?"
 	rows, err := database.DB.Query(query, userId)
 	if err != nil {
 		return nil, err
