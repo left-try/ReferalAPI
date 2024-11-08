@@ -54,15 +54,3 @@ func (user *User) ValidateUser() error {
 	}
 	return nil
 }
-
-func (user *User) ValidateRef(code string) error {
-	query := "SELECT userId FROM codes WHERE code = ?"
-	row := database.DB.QueryRow(query, code)
-	var referrerId int64
-	err := row.Scan(&referrerId)
-	if err != nil {
-		return err
-	}
-	user.ReferrerId = referrerId
-	return nil
-}
