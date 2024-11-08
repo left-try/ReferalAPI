@@ -67,7 +67,7 @@ func GetCodeByEmail(email string) (string, error) {
 }
 
 func GetUserIdByCode(code string) (int64, error) {
-	query := "SELECT userId FROM codes WHERE code =?"
+	query := "SELECT id FROM codes WHERE code =?"
 	row := database.DB.QueryRow(query, code)
 	var userId int64
 	err := row.Scan(&userId)
