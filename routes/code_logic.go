@@ -52,3 +52,19 @@ func getCodeByEmail(context *gin.Context) {
 
 	context.JSON(http.StatusOK, gin.H{"code": code})
 }
+
+func getReferralsByReferrerId(context *gin.Context) {
+	userId, err := strconv.ParseInt(context.Param("userId"), 10, 64)
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"error": "Invalid user ID"})
+		return
+	}
+
+	referrals, err := models.GetReferrals(userId)
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to get referrals"})
+		return
+	}
+
+	context.JSON(http.StatusOK, gin.H{"referrals": referrals})
+}
