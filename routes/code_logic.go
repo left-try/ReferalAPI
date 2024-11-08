@@ -1,9 +1,9 @@
 package routes
 
 import (
-	"awesomeProject/models"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"referralAPI/models"
 	"strconv"
 )
 

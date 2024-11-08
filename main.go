@@ -1,9 +1,9 @@
 package main
 
 import (
-	"awesomeProject/database"
-	"awesomeProject/routes"
 	"github.com/gin-gonic/gin"
+	"referralAPI/database"
+	"referralAPI/routes"
 )
 
 func main() {

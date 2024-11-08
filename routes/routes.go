@@ -1,8 +1,8 @@
 package routes
 
 import (
-	"awesomeProject/middleware"
 	"github.com/gin-gonic/gin"
+	"referralAPI/middleware"
 )
 
 func Router(server *gin.Engine) {

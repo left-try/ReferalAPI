@@ -1,10 +1,10 @@
 package models
 
 import (
-	"awesomeProject/database"
-	"awesomeProject/utils"
 	"database/sql"
 	"errors"
+	"referralAPI/database"
+	"referralAPI/utils"
 )
 
 type User struct {

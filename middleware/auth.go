@@ -1,9 +1,9 @@
 package middleware
 
 import (
-	"awesomeProject/utils"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"referralAPI/utils"
 )
 
 func Authenticate(context *gin.Context) {

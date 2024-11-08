@@ -1,4 +1,4 @@
-module awesomeProject
+module referralAPI
 
 go 1.21
 

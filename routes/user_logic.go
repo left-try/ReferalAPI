@@ -1,10 +1,10 @@
 package routes
 
 import (
-	"awesomeProject/models"
-	"awesomeProject/utils"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"referralAPI/models"
+	"referralAPI/utils"
 )
 
 func signUp(context *gin.Context) {
