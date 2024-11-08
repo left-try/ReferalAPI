@@ -1,0 +1,31 @@
+###
+
+POST localhost:8000/create_code
+Content-Type: application/json
+
+{
+  "userId": 1
+}
+
+
+###
+
+POST localhost:8000/signup_by_ref/1_referral_code
+Content-Type: application/json
+
+{
+  "email": "john.doe@example.com",
+  "password": "password123"
+}
+
+###
+
+GET localhost:8000/get_code_by_email/test@example.com
+
+###
+
+GET localhost:8000/get_referrals/1
+
+###
+
+DELETE localhost:8000/delete_code/1_referral_code
