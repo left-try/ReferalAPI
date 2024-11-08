@@ -8,9 +8,10 @@ import (
 )
 
 type User struct {
-	Id       int64
-	Email    string `binding:"required"`
-	Password string `binding:"required"`
+	Id         int64
+	Email      string `binding:"required"`
+	Password   string `binding:"required"`
+	ReferrerId int64
 }
 
 func (user *User) Save() error {
@@ -54,6 +55,14 @@ func (user *User) ValidateUser() error {
 	return nil
 }
 
-func (user *User) ValidateRef() error {
+func (user *User) ValidateRef(code string) error {
+	query := "SELECT userId FROM codes WHERE code = ?"
+	row := database.DB.QueryRow(query, code)
+	var referrerId int64
+	err := row.Scan(&referrerId)
+	if err != nil {
+		return err
+	}
+	user.ReferrerId = referrerId
 	return nil
 }
