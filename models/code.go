@@ -69,14 +69,14 @@ func GetCodeByEmail(email string) (string, error) {
 func GetUserIdByCode(code string) (int64, error) {
 	query := "SELECT id FROM codes WHERE code =?"
 	row := database.DB.QueryRow(query, code)
-	var userId int64
-	err := row.Scan(&userId)
+	var id int64
+	err := row.Scan(&id)
 	if errors.Is(err, sql.ErrNoRows) {
 		return -1, nil
 	} else if err != nil {
 		return -1, err
 	}
-	return userId, nil
+	return id, nil
 }
 
 func GetReferrals(userId int64) ([]int64, error) {
