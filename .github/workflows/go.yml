@@ -22,7 +22,8 @@ jobs:
       # Install dependencies
       - name: Install dependencies
         run: |
-          go mod tidy
+          go mod tidy &
+          sleep 10
 
       # Start the Go server in the background
       - name: Start Go Server
