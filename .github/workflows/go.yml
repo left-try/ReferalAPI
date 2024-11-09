@@ -13,6 +13,22 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      # Set up Go environment
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: '1.20'  # Change to your Go version
+
+      # Install dependencies
+      - name: Install dependencies
+        run: |
+          go mod tidy
+
+      # Start the Go server in the background
+      - name: Start Go Server
+        run: |
+          nohup go run main.go
+
       # Previous API tests for signup and login
       - name: Sign Up Request
         run: |
