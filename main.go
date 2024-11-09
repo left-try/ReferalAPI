@@ -1,18 +1,28 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 	"referralAPI/cron"
 	"referralAPI/database"
+	_ "referralAPI/docs"
 	"referralAPI/routes"
 	"time"
 )
 
-func main() {
-	database.InitDB()       // Initialize database
-	server := gin.Default() // Server
+//	@title			Referral API
+//	@version		1.0
+//	@description	A referral links management service API in Go using Gin framework.
 
-	routes.Router(server) // Initialize routes
+//	@host		localhost:8000
+//	@BasePath	/
+
+func main() {
+	database.InitDB() // Initialize database
+
+	router := routes.Router() // Initialize routes
+
+	router.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	ticker := time.NewTicker(5 * time.Minute) // Try to delete expired codes every 5 minutes
 	quit := make(chan struct{})
@@ -29,7 +39,7 @@ func main() {
 		}
 	}()
 
-	err := server.Run("localhost:8000") // Run server
+	err := router.Run("localhost:8000") // Run server
 	if err != nil {
 
 		return

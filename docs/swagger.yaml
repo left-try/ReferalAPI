@@ -1,0 +1,290 @@
+basePath: /
+definitions:
+  models.Code:
+    properties:
+      code:
+        type: string
+      id:
+        type: integer
+      userId:
+        type: integer
+    required:
+    - userId
+    type: object
+  models.User:
+    properties:
+      email:
+        type: string
+      id:
+        type: integer
+      password:
+        type: string
+      referrerId:
+        type: integer
+    required:
+    - email
+    - password
+    type: object
+host: localhost:8000
+info:
+  contact: {}
+  description: A referral links management service API in Go using Gin framework.
+  title: Referral API
+  version: "1.0"
+paths:
+  /create_code:
+    post:
+      consumes:
+      - application/json
+      description: Takes a code JSON and stores it in the database. Returns the saved
+        JSON object.
+      parameters:
+      - description: Code data
+        in: body
+        name: code
+        required: true
+        schema:
+          $ref: '#/definitions/models.Code'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Code created
+          schema:
+            $ref: '#/definitions/models.Code'
+        "400":
+          description: Invalid request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Failed to create code
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Create a new code
+      tags:
+      - code
+  /delete_code/{code}:
+    delete:
+      description: Deletes a code specified by its code ID.
+      parameters:
+      - description: Code ID
+        in: path
+        name: code
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Code deleted successfully
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Failed to delete code
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Delete a code by ID
+      tags:
+      - code
+  /get_code_by_email/{email}:
+    get:
+      description: Retrieves a code based on the provided email address.
+      parameters:
+      - description: Email address
+        in: path
+        name: email
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Code found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Code not found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Failed to get code
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Get code by email
+      tags:
+      - code
+  /get_referrals/{referrerId}:
+    get:
+      description: Retrieves a list of referrals based on the referrer's user ID.
+      parameters:
+      - description: Referrer ID
+        in: path
+        name: referrerId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: List of referrals
+          schema:
+            additionalProperties:
+              items:
+                type: integer
+              type: array
+            type: object
+        "400":
+          description: Invalid user ID
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Failed to get referrals
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Get referrals by referrer ID
+      tags:
+      - code
+  /login:
+    post:
+      consumes:
+      - application/json
+      description: Authenticates a user based on email and password, and returns an
+        authentication token.
+      parameters:
+      - description: User credentials
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: User logged in
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Invalid request data
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal server error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Log in user with email and password
+      tags:
+      - user
+  /signup:
+    post:
+      consumes:
+      - application/json
+      description: Registers a new user by accepting a JSON object and saving it to
+        the database. Returns the created user.
+      parameters:
+      - description: User data
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.User'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: User created
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Invalid request data
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal server error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Register a new user
+      tags:
+      - user
+  /signup_by_ref/{code}:
+    post:
+      consumes:
+      - application/json
+      description: Registers a new user using a referral code to link them to an existing
+        user as the referrer.
+      parameters:
+      - description: Referral code
+        in: path
+        name: code
+        required: true
+        type: string
+      - description: User data
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.User'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: User created
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Invalid request data
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Referral code not found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal server error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Register a new user with referral code
+      tags:
+      - user
+swagger: "2.0"
