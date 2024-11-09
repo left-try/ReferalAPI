@@ -164,7 +164,3 @@ http://localhost:8000/docs/index.html
 
 1. **Run Server**: Start up the server as shown higher
 2. **Run Tests**: Manually run http request located in the `tests` folder
-
-Or
-
-1. Run Github Actions
