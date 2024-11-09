@@ -10,9 +10,9 @@ func Router() *gin.Engine {
 	authenticated := server.Group("/")
 	authenticated.Use(middleware.Authenticate)
 
-	server.POST("/signup", signUp)
-	server.POST("/login", logInByPass)
-	server.POST("/signup_by_ref/:code", signUpByRef)
+	server.POST("/signup", SignUp)
+	server.POST("/login", LogInByPass)
+	server.POST("/signup_by_ref/:code", SignUpByRef)
 
 	server.GET("/get_code_by_email/:email", getCodeByEmail)
 	server.GET("/get_referrals/:referrerId", getReferralsByReferrerId)
